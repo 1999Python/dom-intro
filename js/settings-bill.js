@@ -52,6 +52,7 @@ callCost = Number(callCostSetting3.value);
 smsCost = Number(smsCostSetting3.value);
 warningLevel = warningLevelSetting3.value;
 criticalLevel = criticalLevelSetting3.value;
+
 }
 
 function textBillTotal3() {
@@ -74,13 +75,19 @@ callsTotalElem3.innerHTML = callsTotal3.toFixed(2);
 smsTotalElem3.innerHTML = smsTotal3.toFixed(2);
 totalCost3 = callsTotal3 + smsTotal3;
 totalCostElem3.innerHTML = totalCost3.toFixed(2);
+
 if (totalCost3 > criticalLevel){
-totalCostElem3.classList.add("danger"); 
+    totalCostElem3.classList.add("danger"); 
+    myButton3.disabled = true;
 }
-else if (totalCost3 > warningLevel){
-totalCostElem3.classList.add("warning");
+    
+    else if (totalCost3 > warningLevel){
+    totalCostElem3.classList.add("warning");
+  
+    
 }
-}
+}    
+
 //add an event listener for when the 'Update settings' button is pressed
 updateSettings3.addEventListener("click", updatingSettings);
 myButton3.addEventListener("click", textBillTotal3);
