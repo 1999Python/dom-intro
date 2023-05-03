@@ -19,14 +19,19 @@ const myTotal = document.querySelector(".billTotal");
 const myText = document.querySelector(".billString");
 
 function totalPhoneBill(billList){
-const currentList = billList.split(",")
-var total = 0;
-for (var i=0;i<currentList.length;i++){
-var bill = currentList[i].trim();
-if (bill.startsWith("sms")){
+
+    const currentList = billList.split(",")
+
+    var total = 0;
+
+    for (var i=0;i<currentList.length;i++){
+
+        var bill = currentList[i].trim();
+
+if (bill.toLowerCase() === "sms"){  
 total += 0.65;
 }
-else if (bill.startsWith("call")){
+else if (bill.toLowerCase() === "call"){
 total += 2.75;
 }
 }
@@ -36,9 +41,17 @@ return total.toFixed(2) ;
 function calculateBtnClicked(){
 // get the string entered in the textArea
 var billString = myText.value; 
-//round to two decimals
+//round to two decimalss
 var roundedBillTotal = totalPhoneBill(billString);
 myTotal.innerHTML = roundedBillTotal;
+
+if (roundedBillTotal >= 20){
+    myTotal.classList.add("danger"); 
+    }
+    else if (roundedBillTotal >= 30){
+    myTotal.classList.add("warning");
+    return 30;
+    }
 }
 
 myButton.addEventListener("click", calculateBtnClicked);

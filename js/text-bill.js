@@ -24,10 +24,11 @@ var smsTotal = 0;
 function textBillTotal(){
 
 var billTypeEntered = myText1.value.trim();
-if (billTypeEntered === "call"){
+
+if (billTypeEntered.toLowerCase() === "call"){
 callsTotal += 2.75
 }
-else if (billTypeEntered === "sms"){
+else if (billTypeEntered.toLowerCase() === "sms"){
 smsTotal += 0.75;
 }
 callsTotalElem.innerHTML = callsTotal.toFixed(2);
