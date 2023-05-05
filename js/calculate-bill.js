@@ -34,9 +34,12 @@ total += 0.65;
 else if (bill.toLowerCase() === "call"){
 total += 2.75;
 }
+
 }
-return total.toFixed(2) ;
+return total.toFixed(2);
 }
+
+
 
 function calculateBtnClicked(){
 // get the string entered in the textArea
@@ -45,13 +48,14 @@ var billString = myText.value;
 var roundedBillTotal = totalPhoneBill(billString);
 myTotal.innerHTML = roundedBillTotal;
 
-if (roundedBillTotal >= 20){
+if (roundedBillTotal >= 30){
     myTotal.classList.add("danger"); 
+    
     }
-    else if (roundedBillTotal >= 30){
-    myTotal.classList.add("warning");
-    return 30;
+    else if (roundedBillTotal >= 20){
+        myTotal.classList.add("warning");
     }
+
 }
 
 myButton.addEventListener("click", calculateBtnClicked);

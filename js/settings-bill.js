@@ -56,6 +56,7 @@ criticalLevel = criticalLevelSetting3.value;
 if(totalCost3 < criticalLevel){
     myButton3.disabled = false; 
     totalCostElem3.classList.remove("danger");
+    totalCostElem3.classList.remove("warning");
 }
 
 }
