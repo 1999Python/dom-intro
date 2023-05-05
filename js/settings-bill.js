@@ -82,12 +82,12 @@ smsTotalElem3.innerHTML = smsTotal3.toFixed(2);
 totalCost3 = callsTotal3 + smsTotal3;
 totalCostElem3.innerHTML = totalCost3.toFixed(2);
 
-if (totalCost3 > criticalLevel){
+if (totalCost3 >= criticalLevel){
     totalCostElem3.classList.add("danger");
     myButton3.disabled = true; 
     
 }
-    else if (totalCost3 > warningLevel){
+    else if (totalCost3 >= warningLevel){
     totalCostElem3.classList.add("warning");
     
 }

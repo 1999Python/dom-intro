@@ -40,7 +40,6 @@ return total.toFixed(2);
 }
 
 
-
 function calculateBtnClicked(){
 // get the string entered in the textArea
 var billString = myText.value; 
