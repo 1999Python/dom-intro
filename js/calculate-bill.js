@@ -55,6 +55,14 @@ if (roundedBillTotal >= 30){
         myTotal.classList.add("warning");
     }
 
+    if(roundedBillTotal < 20){
+        myTotal.classList.remove("warning");
+    }
+
+    else if(roundedBillTotal < 30){
+        myTotal.classList.remove("danger");
+    }
 }
+
 
 myButton.addEventListener("click", calculateBtnClicked);
