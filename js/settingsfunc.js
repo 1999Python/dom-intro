@@ -80,6 +80,7 @@ function BillWithSettings() {
     }
 
     function totalClassName() {
+        alert(getTotalCost() > getWarningLevel())
         if (getTotalCost() > getWarningLevel()) {
             return "warning";
         }
@@ -87,7 +88,7 @@ function BillWithSettings() {
     function totalClassName1() {
 
         if (hasReachedCriticalLevel()) {
-            return "critical";
+            return "danger";
         }
     }
 

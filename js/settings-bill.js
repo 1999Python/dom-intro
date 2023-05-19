@@ -1,6 +1,4 @@
-
 //connectng Dom with Factory Function 
-
 const billSettings = BillWithSettings();//factory function 
 
 const updateBtn = document.querySelector(".updateSettings");//settings button
@@ -17,42 +15,31 @@ const warningLevelSetting = document.querySelector(".warningLevelSetting");//war
 const criticalLevelSetting = document.querySelector(".criticalLevelSetting");//critical settings
 
 
-
+//
 //function1 for my settings 
 function updateSettingButton() {
-//So the main guy settingsBill is linking with the baby functions and in the paratheneses 
-//we using parse method that changes strings and returns them into numbers and only returns the 1st num
-//we then call the dom settings and get the value whatever is passed into the textbox(the argument) 
+
+    //So the main guy settingsBill is linking with the baby functions and in the paratheneses 
+    //we using parse method that changes strings and returns them into numbers and only returns the 1st num
+    //we then call the dom settings and get the value whatever is passed into the textbox(the argument) 
+
     billSettings.setcallCost(parseFloat(callCostValue.value));//callCostValue
     billSettings.setsmsCost(parseFloat(smsCostValue.value));//smsCostValue
     billSettings.setWarningLevel(parseFloat(warningLevelSetting.value));//warningLevelSetting
     billSettings.setCriticalLevel(parseFloat(criticalLevelSetting.value));//criticalLevelSetting
 
-    if (billSettings.getTotalCost() <= criticalLevelSetting && billSettings.getTotalCost() >= warningLevelSetting)
-    //im referencing the factfunct and the baby function for the total less than or 
-    //equal to the critical level setting and && both needs to be true more than an equal to warning settings
-    //we checking that after it has been updated will the colors be removed.
-
-    {
-        totalSettings.classList.remove(billSettings.totalClassName1(criticalLevelSetting.value));//critical
-        totalSettings.classList.add(billSettings.totalClassName(warningLevelSetting.value));//warning
-    }
-
-    else if (billSettings.getTotalCost() <= warningLevelSetting) {
-        //unless its less than both warning and critical level then both colors need to be removed.
-        totalSettings.classList.remove(billSettings.totalClassName(warningLevelSetting.value));//warning one I get confused should rename them
-        totalSettings.classList.remove(billSettings.totalClassName1(criticalLevelSetting.value));//critical
-    }
+    totalSettings.classList.remove("warning");//removing manually instead of the factory functions 
+    totalSettings.classList.remove("danger");
 
 }
 
 //add cost function 
 function addCostButton() {
-    
-    // var checkedRadioBtn = document.querySelector("billItemTypeWithSetting");
+//tryna check if sms or call was checked 
     var checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
-    if (checkedRadioBtn){
-        
+
+    if (checkedRadioBtn) {
+
         // billItemType will be 'call' or 'sms'
         if (checkedRadioBtn.value === "sms") {
             billSettings.sendsms();
@@ -61,35 +48,21 @@ function addCostButton() {
         }
         else if (checkedRadioBtn.value === "call") {
             billSettings.makeCall();
-            
+
         }
-        
+
     }
-    
+
     callTotalSettings.innerHTML = billSettings.getTotalcallCost().toFixed(2);
 
     smsTotalSettings.innerHTML = billSettings.getTotalsmsCost().toFixed(2);
 
     totalSettings.innerHTML = billSettings.getTotalCost().toFixed(2);
-    
 
 
-    if (billSettings.hasReachedCriticalLevel()) {
-//if the total has reached critical level it should remove the warning color and add he red color.
+    totalSettings.classList.add(billSettings.totalClassName1())//warning level
+    totalSettings.classList.add(billSettings.totalClassName());//critical
 
-        totalSettings.classList.add(billSettings.totalClassName1(criticalLevelSetting.value));//critical
-        totalSettings.classList.remove(billSettings.totalClassName(warningLevelSetting.value));//warning
-      
-    }
-
-    else if (billSettings.getTotalCost() >= warningLevelSetting) {
-
-//if the total is more than and equal to the warning setting
-// then add the warning color and remove critical color
-
-        totalSettings.classList.add(billSettings.totalClassName(warningLevelSetting.value));//warning
-        totalSettings.classList.remove(billSettings.totalClassName1(criticalLevelSetting.value));//critical
-    }
 }
 
 radioAdd.addEventListener("click", addCostButton);
