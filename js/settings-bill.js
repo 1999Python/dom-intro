@@ -1,101 +1,97 @@
-// get a reference to the sms or call radio buttons
 
-// get refences to all the settings fields
+//connectng Dom with Factory Function 
 
-//get a reference to the add button
+const billSettings = BillWithSettings();//factory function 
 
-//get a reference to the 'Update settings' button
+const updateBtn = document.querySelector(".updateSettings");//settings button
+const radioAdd = document.querySelector(".buttonAdd");//radio button selecting sms and calls
 
-// create a variables that will keep track of all the settings
+const callTotalSettings = document.querySelector(".callTotalSettings");//total call
+const smsTotalSettings = document.querySelector(".smsTotalSettings");//total sms
+const totalSettings = document.querySelector(".totalSettings");//total
 
-// create a variables that will keep track of all three totals.
+const callCostValue = document.querySelector(".callCostSetting");//call settings
+const smsCostValue = document.querySelector(".smsCostSetting");//sms settings
 
-//add an event listener for when the add button is pressed
+const warningLevelSetting = document.querySelector(".warningLevelSetting");//warning settings
+const criticalLevelSetting = document.querySelector(".criticalLevelSetting");//critical settings
 
-//in the event listener get the value from the billItemTypeRadio radio buttons
-// * add the appropriate value to the call / sms total
-// * add the appropriate value to the overall total
-// * add nothing for invalid values that is not 'call' or 'sms'.
-// * display the latest total on the screen.
-// * check the value thresholds and display the total value in the right color.
 
-const updateSettings3 = document.querySelector(".updateSettings");
 
-const myButton3 = document.querySelector(".buttonAdd"); 
+//function1 for my settings 
+function updateSettingButton() {
+//So the main guy settingsBill is linking with the baby functions and in the paratheneses 
+//we using parse method that changes strings and returns them into numbers and only returns the 1st num
+//we then call the dom settings and get the value whatever is passed into the textbox(the argument) 
+    billSettings.setcallCost(parseFloat(callCostValue.value));//callCostValue
+    billSettings.setsmsCost(parseFloat(smsCostValue.value));//smsCostValue
+    billSettings.setWarningLevel(parseFloat(warningLevelSetting.value));//warningLevelSetting
+    billSettings.setCriticalLevel(parseFloat(criticalLevelSetting.value));//criticalLevelSetting
 
-const callsTotalElem3 = document.querySelector(".callTotalSettings");
+    if (billSettings.getTotalCost() <= criticalLevelSetting && billSettings.getTotalCost() >= warningLevelSetting)
+    //im referencing the factfunct and the baby function for the total less than or 
+    //equal to the critical level setting and && both needs to be true more than an equal to warning settings
+    //we checking that after it has been updated will the colors be removed.
 
-const smsTotalElem3 = document.querySelector(".smsTotalSettings");
+    {
+        totalSettings.classList.remove(billSettings.totalClassName1(criticalLevelSetting.value));//critical
+        totalSettings.classList.add(billSettings.totalClassName(warningLevelSetting.value));//warning
+    }
 
-const totalCostElem3 = document.querySelector(".totalSettings");
-
-const callCostSetting3 = document.querySelector(".callCostSetting");
-
-const smsCostSetting3 = document.querySelector(".smsCostSetting");
-
-const criticalLevelSetting3 = document.querySelector(".criticalLevelSetting"); 
-
-const warningLevelSetting3 = document.querySelector(".warningLevelSetting");
-
-var callCost = 0;
-var smsCost = 0;
-var criticalLevel = 0;
-var warningLevel = 0;
-var callsTotal3 = 0;
-var smsTotal3 = 0;
-var totalCost3 = 0;
-
-function updatingSettings(){
-//get the value of the settings elements.
-
-callCost = Number(callCostSetting3.value);
-smsCost = Number(smsCostSetting3.value);
-warningLevel = warningLevelSetting3.value;
-criticalLevel = criticalLevelSetting3.value;
-
-if(totalCost3 < criticalLevel){
-    myButton3.disabled = false; 
-    totalCostElem3.classList.remove("danger");
-    totalCostElem3.classList.remove("warning");
-}
+    else if (billSettings.getTotalCost() <= warningLevelSetting) {
+        //unless its less than both warning and critical level then both colors need to be removed.
+        totalSettings.classList.remove(billSettings.totalClassName(warningLevelSetting.value));//warning one I get confused should rename them
+        totalSettings.classList.remove(billSettings.totalClassName1(criticalLevelSetting.value));//critical
+    }
 
 }
 
-function textBillTotal3() {
-
-// var billTypeEntered3 = myText3.value;
-
-var checkedRadioBtn3 = document.querySelector("input[name='billItemType']:checked");
-if (checkedRadioBtn3){
-var billTypeEntered3 = checkedRadioBtn3.value
-}
-
-if (billTypeEntered3 === "call") {
-callsTotal3 += callCost
-}
-else if (billTypeEntered3 === "sms") {
-smsTotal3 += smsCost;
-}
-console.log(callsTotal3)
-callsTotalElem3.innerHTML = callsTotal3.toFixed(2);
-smsTotalElem3.innerHTML = smsTotal3.toFixed(2);
-totalCost3 = callsTotal3 + smsTotal3;
-totalCostElem3.innerHTML = totalCost3.toFixed(2);
-
-if (totalCost3 >= criticalLevel){
-    totalCostElem3.classList.add("danger");
-    myButton3.disabled = true; 
+//add cost function 
+function addCostButton() {
     
-}
-    else if (totalCost3 >= warningLevel){
-    totalCostElem3.classList.add("warning");
+    // var checkedRadioBtn = document.querySelector("billItemTypeWithSetting");
+    var checkedRadioBtn = document.querySelector("input[name='billItemType']:checked");
+    if (checkedRadioBtn){
+        
+        // billItemType will be 'call' or 'sms'
+        if (checkedRadioBtn.value === "sms") {
+            billSettings.sendsms();
+            //what im tryna say is that if the checkedradiobtn gets the value of "call" /"sms" 
+            //then we should call the baby function makeCall and the same for sms 
+        }
+        else if (checkedRadioBtn.value === "call") {
+            billSettings.makeCall();
+            
+        }
+        
+    }
     
+    callTotalSettings.innerHTML = billSettings.getTotalcallCost().toFixed(2);
+
+    smsTotalSettings.innerHTML = billSettings.getTotalsmsCost().toFixed(2);
+
+    totalSettings.innerHTML = billSettings.getTotalCost().toFixed(2);
+    
+
+
+    if (billSettings.hasReachedCriticalLevel()) {
+//if the total has reached critical level it should remove the warning color and add he red color.
+
+        totalSettings.classList.add(billSettings.totalClassName1(criticalLevelSetting.value));//critical
+        totalSettings.classList.remove(billSettings.totalClassName(warningLevelSetting.value));//warning
+      
+    }
+
+    else if (billSettings.getTotalCost() >= warningLevelSetting) {
+
+//if the total is more than and equal to the warning setting
+// then add the warning color and remove critical color
+
+        totalSettings.classList.add(billSettings.totalClassName(warningLevelSetting.value));//warning
+        totalSettings.classList.remove(billSettings.totalClassName1(criticalLevelSetting.value));//critical
+    }
 }
 
+radioAdd.addEventListener("click", addCostButton);
 
-
-}    
-
-//add an event listener for when the 'Update settings' button is pressed
-updateSettings3.addEventListener("click", updatingSettings);
-myButton3.addEventListener("click", textBillTotal3);
+updateBtn.addEventListener("click", updateSettingButton);
