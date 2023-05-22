@@ -80,7 +80,6 @@ function BillWithSettings() {
     }
 
     function totalClassName() {
-        alert(getTotalCost() > getWarningLevel())
         if (getTotalCost() > getWarningLevel()) {
             return "warning";
         }
